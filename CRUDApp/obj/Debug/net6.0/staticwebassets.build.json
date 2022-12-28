@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "Hash": "aMDLG+s+Nf3nuKM4Nl2JFrBAQCwEKupICD5ZQkk/HQM=",
+  "Source": "CRUDApp",
+  "BasePath": "_content/CRUDApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "CRUDApp\\wwwroot",
+      "Source": "CRUDApp",
+      "ContentRoot": "C:\\Users\\FGXX1735\\source\\repos\\CRUDApp\\CRUDApp\\wwwroot\\",
+      "BasePath": "_content/CRUDApp",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\FGXX1735\\source\\repos\\CRUDApp\\CRUDApp\\wwwroot\\StyleSheet.css",
+      "SourceId": "CRUDApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\FGXX1735\\source\\repos\\CRUDApp\\CRUDApp\\wwwroot\\",
+      "BasePath": "_content/CRUDApp",
+      "RelativePath": "StyleSheet.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\StyleSheet.css"
+    }
+  ]
+}
