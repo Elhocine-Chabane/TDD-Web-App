@@ -16,6 +16,18 @@ namespace ServiceContracts.DTO
     {
         public Guid CountryID { get; set; }
         public string? CountryName { get; set; }
+        public override bool Equals(object? obj)
+        {
+            if(obj == null) return false;
+            if (obj.GetType() != typeof(CountryResponse)) return false;
+            CountryResponse? country_To_Compare = obj as CountryResponse;
+            return country_To_Compare.CountryName == this.CountryName && country_To_Compare.CountryID == this.CountryID;
+            
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
 
     }
 
