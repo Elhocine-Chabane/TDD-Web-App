@@ -6,8 +6,7 @@ using Services;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using ServiceContracts.DTO.enums;
-using System.Reflection;
-using System.Net.Http.Headers;
+using System.Linq;
 using Xunit.Abstractions;
 
 namespace CRUDTests
@@ -412,6 +411,94 @@ namespace CRUDTests
 
                 }
                 
+            }
+        }
+        #endregion
+
+        #region
+        // When we sort based on PersonName in DESC, it should return perons list 
+        //in descending order on PersonName
+        [Fact]
+        public void GetSortedPersons_()
+        {
+            //Arrange
+            CountryAddRequest country_request_1 = new CountryAddRequest()
+            {
+                CountryName = "USA"
+            };
+            CountryAddRequest country_request_2 = new CountryAddRequest()
+            {
+                CountryName = "India"
+            };
+            CountryResponse country_response_1 = _countriesService.AddCountry(country_request_1);
+            CountryResponse country_response_2 = _countriesService.AddCountry(country_request_2);
+            PersonAddRequest person_request_1 = new PersonAddRequest()
+            {
+                PersonName = "Smith",
+                Email = "smith@example.com",
+                Gender = GenderOptions.Male,
+                CountryID = country_response_1.CountryID,
+                DateOfBirth = DateTime.Parse("2002-05-06"),
+                ReceiveNewsLetters = false,
+                Address = "address of smith"
+            };
+            PersonAddRequest person_request_2 = new PersonAddRequest()
+            {
+                PersonName = "Mary",
+                Email = "mary@example.com",
+                Gender = GenderOptions.Female,
+                Address = "address of Mary",
+                CountryID = country_response_2.CountryID,
+                DateOfBirth = DateTime.Parse("2002-02-02"),
+                ReceiveNewsLetters = true,
+
+            };
+            PersonAddRequest person_request_3 = new PersonAddRequest()
+            {
+                PersonName = "Rahman",
+                Email = "rahman@example.com",
+                Gender = GenderOptions.Male,
+                Address = "address of Rahman",
+                CountryID = country_response_2.CountryID,
+                DateOfBirth = DateTime.Parse("1999-03-03")
+
+            };
+            List<PersonAddRequest> persons_request = new List<PersonAddRequest>()
+            {
+                person_request_1,
+                person_request_2,
+                person_request_3
+            };
+            List<PersonResponse> persons_response_list_from_add = new List<PersonResponse>();
+            foreach (PersonAddRequest person_request in persons_request)
+            {
+                PersonResponse person_response = _personsService.AddPerson(person_request);
+                persons_response_list_from_add.Add(person_response);
+            }
+
+            // print persons_response_list_from_add
+            _testOutputHelper.WriteLine("Expected:  ");
+            foreach (var person_response in persons_response_list_from_add)
+            {
+                _testOutputHelper.WriteLine(person_response.ToString());
+
+            }
+            List<PersonResponse> allPerons = _personsService.GetAllPersons();
+            //Act
+            List<PersonResponse> person_response_list_from_sort = _personsService.GetSortedPersons(allPerons, nameof(Person.PersonName), SortOrderOptions.DESC);
+
+
+            // print person_response_list_from_sort 
+            _testOutputHelper.WriteLine("Actual : ");
+            foreach (var person in person_response_list_from_sort)
+            {
+                _testOutputHelper.WriteLine(person.ToString());
+            }
+            persons_response_list_from_add = persons_response_list_from_add.OrderByDescending(temp => temp.PersonName).ToList();
+            //Assert 
+            for(int i =0; i  < persons_response_list_from_add.Count; i++)
+            {
+                Assert.Equal(person_response_list_from_sort[i], persons_response_list_from_add[i]);
             }
         }
         #endregion
