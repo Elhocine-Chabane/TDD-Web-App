@@ -8,12 +8,14 @@ using ServiceContracts.DTO;
 using ServiceContracts.DTO.enums;
 using System.Linq;
 using Xunit.Abstractions;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CRUDTests
 {
     public class PersonsServiceTest
     {
         private readonly IPersonsService _personsService;
+        
         private readonly ICountriesService _countriesService;
         private readonly ITestOutputHelper _testOutputHelper;
         public PersonsServiceTest(ITestOutputHelper testOutputHelper)
@@ -234,6 +236,8 @@ namespace CRUDTests
         }
 
         #endregion
+
+
         #region GetFilteredPersons
 
         // if the search text is empty and search by is "PersonName", 
@@ -415,7 +419,8 @@ namespace CRUDTests
         }
         #endregion
 
-        #region
+
+        #region GetSortedPersons
         // When we sort based on PersonName in DESC, it should return perons list 
         //in descending order on PersonName
         [Fact]
@@ -502,6 +507,155 @@ namespace CRUDTests
             }
         }
         #endregion
+
+        #region UpdatePerson
+
+        //when we supply null as PersonUpdateRequest, it should throw ArgumentNullException
+        [Fact]
+        public void UpdatePerson_NullUpdatePerson()
+        {
+            //Arrange
+            PersonUpdateRequest personUpdateRequest = null;
+            
+
+            //Assert 
+            Assert.Throws<ArgumentNullException>(
+                //Act
+                () =>_personsService.UpdatePerson(personUpdateRequest));
+        }
+        // when we supply invalid person id, it throws ArgumentException
+        [Fact]
+        public void UpdatePerson_InvalidPersonID()
+        {
+            //Arrange
+            PersonUpdateRequest? person_update_request = new PersonUpdateRequest()
+            {
+                PersonID = Guid.NewGuid()
+
+            };
+            //Assert 
+            Assert.Throws<ArgumentException> ( 
+                //Act
+                () => _personsService.UpdatePerson(person_update_request)
+                );
+
+
+          
+        }
+        // When PersonName is null, it should throw ArgumentException
+        // here I am just writing a test to test PersonName, I did not
+        // write tests on the other Prop no need for that I is just 
+        // an application to learn nothing more
+        [Fact]
+        public void UpdatePerson_PersonNameIsNull()
+        {
+            //Arrange
+            CountryAddRequest country_add_request = new CountryAddRequest()
+            {
+                CountryName = "UK"
+            };
+            CountryResponse country_response_from_add = _countriesService.AddCountry(country_add_request);
+            PersonAddRequest person_add_request = new PersonAddRequest()
+            {
+                PersonName = "Hakim",
+                CountryID = country_response_from_add.CountryID,
+                Email = "hakim@example.com",
+                Gender = GenderOptions.Male
+            };
+            PersonResponse person_response_from_add = _personsService.AddPerson(person_add_request);
+            PersonUpdateRequest person_update_request = person_response_from_add.ToPersonUpdateRequest();
+
+            //Act
+            person_update_request.PersonName = null;
+            // Arrange
+            Assert.Throws<ArgumentException>(() =>
+            {
+                _personsService.UpdatePerson(person_update_request);
+            });
+        }
+        // First, we add a person and try to update the person Name and the person Email
+        [Fact]
+        public void UpdatePerson_PersonFullDetailsUpdation()
+        {
+            CountryAddRequest country_add_request = new CountryAddRequest()
+            {
+                CountryName = "USA"
+            };
+            CountryResponse country_response_from_add = _countriesService.AddCountry(country_add_request);
+            PersonAddRequest person_add_request = new PersonAddRequest()
+            {
+                PersonName = "Elhocine",
+                CountryID = country_response_from_add.CountryID,
+                Email ="elhocine@example.com",
+                Gender = GenderOptions.Male
+            };
+            PersonResponse person_response_from_add = _personsService.AddPerson(person_add_request);
+            PersonUpdateRequest person_update_request = person_response_from_add.ToPersonUpdateRequest();
+            person_update_request.PersonName = "william";
+            person_update_request.Email = "wiliam@example.com";
+
+            // Act 
+
+            PersonResponse person_response_from_updatePerson = _personsService.UpdatePerson(person_update_request);
+            PersonResponse person_response_from_get = _personsService.GetPersonByPersonID(person_response_from_updatePerson.PersonID);
+     
+            //Assert 
+            Assert.Equal(person_response_from_get, person_response_from_updatePerson);
+
+        }
+
+
+
+
+
+        #endregion
+
+        #region DeletePerson
+
+        // if you supply a non existing Id it should return false
+
+        [Fact]
+        public void DeletePerson_NonExistingID()
+        {
+            //Arrange
+            Assert.False(_personsService.DeletePerson(Guid.NewGuid()));
+        }
+
+        // if we supply a valid PersonID it should return true
+        [Fact]
+        public void DeletePerson_ValidPersonID()
+        {
+            CountryAddRequest country_request = new CountryAddRequest()
+            {
+                CountryName = "France",
+            };
+
+            CountryResponse country_response = _countriesService.AddCountry(country_request);
+
+            PersonAddRequest person_request = new PersonAddRequest()
+            {
+                CountryID = country_response.CountryID,
+                PersonName = "Elhocine",
+                Email = "exampe@example.com",
+                Gender = GenderOptions.Male
+
+            };
+
+            PersonResponse person_response_from_add = _personsService.AddPerson(person_request);
+
+            //Asssert 
+            Assert.True(_personsService.DeletePerson(person_response_from_add.PersonID));
+            
+
+
+
+
+        }
+
+
+
+        #endregion
+
 
 
     }

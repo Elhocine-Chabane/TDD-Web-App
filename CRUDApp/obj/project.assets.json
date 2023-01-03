@@ -1,11 +1,69 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "Entities/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Entities.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Entities.dll": {}
+        }
+      },
+      "ServiceContracts/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Entities": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/ServiceContracts.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ServiceContracts.dll": {}
+        }
+      },
+      "Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Entities": "1.0.0",
+          "ServiceContracts": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Services.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Entities/1.0.0": {
+      "type": "project",
+      "path": "../Entities/Entities.csproj",
+      "msbuildProject": "../Entities/Entities.csproj"
+    },
+    "ServiceContracts/1.0.0": {
+      "type": "project",
+      "path": "../ServiceContracts/ServiceContracts.csproj",
+      "msbuildProject": "../ServiceContracts/ServiceContracts.csproj"
+    },
+    "Services/1.0.0": {
+      "type": "project",
+      "path": "../Services/Services.csproj",
+      "msbuildProject": "../Services/Services.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "Entities >= 1.0.0",
+      "ServiceContracts >= 1.0.0",
+      "Services >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\FGXX1735\\.nuget\\packages\\": {}
@@ -33,7 +91,17 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\FGXX1735\\source\\repos\\CRUDApp\\Entities\\Entities.csproj": {
+              "projectPath": "C:\\Users\\FGXX1735\\source\\repos\\CRUDApp\\Entities\\Entities.csproj"
+            },
+            "C:\\Users\\FGXX1735\\source\\repos\\CRUDApp\\ServiceContracts\\ServiceContracts.csproj": {
+              "projectPath": "C:\\Users\\FGXX1735\\source\\repos\\CRUDApp\\ServiceContracts\\ServiceContracts.csproj"
+            },
+            "C:\\Users\\FGXX1735\\source\\repos\\CRUDApp\\Services\\Services.csproj": {
+              "projectPath": "C:\\Users\\FGXX1735\\source\\repos\\CRUDApp\\Services\\Services.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

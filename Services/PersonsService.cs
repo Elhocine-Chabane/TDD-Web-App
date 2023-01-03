@@ -137,5 +137,47 @@ namespace Services
             };
             return sortedPersons;
         }
+
+        public PersonResponse UpdatePerson(PersonUpdateRequest? personUpdateRequest)
+        {
+            if(personUpdateRequest == null) throw new ArgumentNullException(nameof(personUpdateRequest));
+            // validation of data (using dataanotation)
+            ValidationHelper.ModelValidation(personUpdateRequest);
+
+            // Get matching person object to update 
+            Person? matchingPerson = _personList.FirstOrDefault(temp => temp.PersonID == personUpdateRequest.PersonID);
+            if(matchingPerson == null)
+            {
+                throw new ArgumentException("given person id does not exist");
+            }
+            // update all details
+
+            matchingPerson.PersonName = personUpdateRequest.PersonName;
+            matchingPerson.Email = personUpdateRequest.Email;
+            matchingPerson.DateOfBirth = personUpdateRequest.DateOfBirth;
+            matchingPerson.Gender = personUpdateRequest.Gender.ToString();
+            matchingPerson.CountryID = personUpdateRequest.CountryID;
+            matchingPerson.Address = personUpdateRequest.Address;
+            matchingPerson.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
+
+            return matchingPerson.ToPersonResponse();
+           
+        }
+
+        public bool DeletePerson(Guid? personID)
+        {
+            if(personID == null)
+            {
+                throw new ArgumentNullException(nameof(personID));
+            }
+            Person? person = _personList.FirstOrDefault(temp => temp.PersonID == personID);
+            if (person == null) return false;
+            else
+            {
+                _personList.RemoveAll(temp => temp.PersonID == personID);
+                return true;
+            }
+            
+        }
     }
 }

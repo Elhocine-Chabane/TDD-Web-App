@@ -20,3 +20,12 @@ C:\Users\FGXX1735\source\repos\CRUDApp\CRUDApp\obj\Debug\net6.0\refint\CRUDApp.d
 C:\Users\FGXX1735\source\repos\CRUDApp\CRUDApp\obj\Debug\net6.0\CRUDApp.pdb
 C:\Users\FGXX1735\source\repos\CRUDApp\CRUDApp\obj\Debug\net6.0\CRUDApp.genruntimeconfig.cache
 C:\Users\FGXX1735\source\repos\CRUDApp\CRUDApp\obj\Debug\net6.0\ref\CRUDApp.dll
+C:\Users\FGXX1735\source\repos\CRUDApp\CRUDApp\bin\Debug\net6.0\Entities.dll
+C:\Users\FGXX1735\source\repos\CRUDApp\CRUDApp\bin\Debug\net6.0\ServiceContracts.dll
+C:\Users\FGXX1735\source\repos\CRUDApp\CRUDApp\bin\Debug\net6.0\Services.dll
+C:\Users\FGXX1735\source\repos\CRUDApp\CRUDApp\bin\Debug\net6.0\Entities.pdb
+C:\Users\FGXX1735\source\repos\CRUDApp\CRUDApp\bin\Debug\net6.0\ServiceContracts.pdb
+C:\Users\FGXX1735\source\repos\CRUDApp\CRUDApp\bin\Debug\net6.0\Services.pdb
+C:\Users\FGXX1735\source\repos\CRUDApp\CRUDApp\obj\Debug\net6.0\CRUDApp.RazorAssemblyInfo.cache
+C:\Users\FGXX1735\source\repos\CRUDApp\CRUDApp\obj\Debug\net6.0\CRUDApp.RazorAssemblyInfo.cs
+C:\Users\FGXX1735\source\repos\CRUDApp\CRUDApp\obj\Debug\net6.0\CRUDApp.csproj.CopyComplete
