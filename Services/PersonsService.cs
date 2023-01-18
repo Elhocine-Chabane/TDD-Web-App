@@ -183,14 +183,15 @@ Mortie,mkinnock5@livejournal.com,1999-01-09,Male,968 Redwing Trail,true
 
         public List<PersonResponse> GetAllPersons()
         {
-            return _personList.Select(person => person.ToPersonResponse()).ToList();
+            return _personList.Select(temp => ConvertPersonToPersonResponse(temp)).ToList();
         }
 
         public PersonResponse GetPersonByPersonID(Guid? personID)
         {
             if (personID == null) return null;
             Person? person = _personList.FirstOrDefault(p => p.PersonID == personID);
-            return person.ToPersonResponse();
+            //return person.ToPersonResponse();
+            return ConvertPersonToPersonResponse(person);
         }
 
         public List<PersonResponse> GetFilteredPersons(string searchBy, string? searchstring)
